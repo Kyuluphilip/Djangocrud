@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% block title %}
+    Emobilis Dashboard
+{% endblock %}
+
+{% block content %}
+
+  <div class=" container-fluid row p-5" style="background-image:url('../../static/images/pin18.jpeg')">
+
+    <!-- Left Column: Student Registration Form -->
+    <div class="col-md-5" style="border-left: 1px solid blueviolet;border-left: 1px solid blueviolet;">
+      <u><h3 class="bg-danger text-black p-1 text-center">STUDENT REGISTRATION FORM</h3></u>
+
+      <form method="POST" action="/addstudent" style="width:100%;">
+          {% csrf_token %}
+        <div class="mb-2">
+          <label for="name" class="form-label">Name</label>
+          <input type="text" class="form-control" name="studname" id="name" placeholder="Enter your name" required>
+        </div>
+        <div class="mb-2">
+          <label for="email" class="form-label">Email</label>
+          <input type="email" class="form-control" name="studmail" id="email" placeholder="Enter your email" required>
+        </div>
+        <div class="mb-2">
+          <label for="age" class="form-label">Age</label>
+          <input type="number" class="form-control" name="studage" id="age" placeholder="Enter your age" required>
+        </div>
+        <button type="submit" class="btn btn-primary m-1">Register</button>
+      </form>
+    </div>
+
+    <!-- Right Column: Table displaying registered students -->
+    <div class="col-md-6" style="border-right: 1px ;border-color: orangered; padding:10px;">
+      <u><h3 class="bg-success text-green text-center p-1">REGISTERED STUDENTS</h3></u>
+      <table class="table table-bordered" style="border-color: black">
+        <thead>
+          <tr>
+            <th scope="col">NAME</th>
+            <th scope="col">EMAIL</th>
+            <th scope="col">AGE</th>
+            <th scope="col">EDIT</th>
+            <th scope="col">DELETE</th>
+
+          </tr>
+        </thead>
+        <tbody>
+        {% for student in data %}
+            <tr>
+                <td>{{ student.name }}</td>
+                <td>{{ student.email }}</td>
+                <td>{{ student.age }}</td>
+
+
+                <td>
+                     <a href="/editstudent/{{ student.id }}" type="button" class="btn btn-outline-info">Edit</a>
+                </td>
+                <td>
+                     <a href="/deletestudent/{{ student.id }}" type="button" class="btn btn-outline-danger">Delete</a>
+                </td>
+
+
+
+
+            </tr>
+        {% endfor %}
+
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+{% endblock %}
